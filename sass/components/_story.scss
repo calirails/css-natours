@@ -1,0 +1,72 @@
+.story {
+    // background-color: $color-dark-gray; // temporary to see content area and boundary
+    width: 75%; // take up to 85% of horiontal area
+    margin: 0 auto; // shortcut to centers horizontally without adding top margin
+    box-shadow: 0 3rem 4rem rgba($color-black, .5);
+    padding: 2rem;
+    font-size: $default-font-size;
+    transform: skewX(-10deg);
+    
+    & > * {
+        transform: skewX(10deg); // undoes the .story { transform: skewX()}
+    }
+
+    /* test media query */
+    @media (max-width: 600px) {
+        width: 95%;
+    }
+
+    &__profile-photo {
+        float: left;
+        position: relative; // needed for the animated centering of text for author name effect defined below in `&__reviewer`
+        /* note this requires shape-outside requires width and height values or else it won't work */
+        -webkit-shape-outside: circle(50% at 50% 50%); // still experimental & requires vendor prefix
+        shape-outside: circle(50% at 50% 50%); // creates a circle that with radius equal to 50% of this element's size
+        width: 9rem;
+        height: 9rem;
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%); // creates a circle with radius equal to half of this element's height and width (a square), and place its center in the middle considering it's floated left.
+        transform: translateX(-1rem) skewX(10deg) // added skewX() to undo the .story { transform: skewX()}
+    }
+
+    &__image { 
+        height: 100%;
+        transform: translateX(-2rem) scale(1.4); // we "zoom in" into make her look closer in before zooming out on hover effect
+    } 
+
+    &__caption {
+        transform: skewX(10deg); // undoes the .story { transform: skewX()}
+    }
+
+    &__reviewer {
+        /* next four props positions it in center of its parent element*/
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* transform: translate(-50%, 50%); this is target state on hover but we move it down by some amount, e.g 90% to hide it until then */
+        transform: translate(-50%, 90%); /* but we move it way down (from center) to make it invisible until hover event */
+        opacity: .01;
+        color: $color-white;
+        font-size: 1.4rem;
+        text-align: center;
+        transition: all .3s;
+    }
+
+    /* NOTE!!: subtle but this means when you hover over the story (not just the profile photo, and we could change this to be just the profile photot if we chose to), 
+                we then apply an effect on the element(s) in which the selector of `.story__reviewer` matches, i.e. the reviewer name tag. 
+    */
+    &:hover &__reviewer {
+        opacity: 1; // now make it visible
+        transform: translate(-50%, -50%); // move to center of photo element
+    }
+
+    /* NOTE!!: subtle but this means when you hover over the story (not just the profile photo, and we could change this to be just the profile photot if we chose to), 
+                we then apply this tnansform effect on the element(s) in which the selector of `.story__image` matches, i.e. the image of the reviewer. 
+    */
+    &:hover &__image { 
+        transform: translateX(-2rem) scale(1); // to enhance effect, we "zoom out" now to put emphasis on hover effect
+        filter: blur(3px) brightness(80%); // to further enhance effect, we blur and darken
+    }
+
+}
+

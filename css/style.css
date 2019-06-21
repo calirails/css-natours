@@ -1,0 +1,1048 @@
+/* RE: Screen Sizes
+    Note: we are using Desktop first, rather than Mobile first mode. With that, we are doing the following:
+    1. Designating 1200-1800 as the default desktop range
+    2. Using max-width for screen sizes smaller than default desktop range
+    3. Using min-width for screen sizes larger than default desktop range
+
+    a. 0px    - 640px : phone-mode
+    b. 640px  - 900px : tablet-portrait-mode
+    c. 900px  - 1200px: tablet-landscape-mode
+    d. 1200px - 1800px: desktop-mode, i.e. default styles apply unless overriden by Media Queries
+    e. 1800px - larger: wide-desktop-mode
+
+    Note: @content is a special directive and is set to the calling nested block
+    @mixin respond-phone-mode {
+        @media (max-width: 600px) { @content }
+    }
+*/
+/* Note: 
+    1. Inside Media Queries, `@content` is a special directive and is set to the calling nested block
+    2. Inside of Media Queries, 1 rem and em is still the browser default of 16px -- it does not respect our custom override to 10px in base.scss, so we use that as our divisor
+*/
+/* 
+    Best Practice outline for Media Queries:
+    1. Base and Typograpth > General Layout + Grid > Page Layout > Components
+*/
+/* base SASS file */
+/* Universal Selector to reset default browser margins and padding */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html {
+  /* 
+        IMPORTANT: Best Practice, we set font-size as the fundamental unit size (in percentage, more on that later)
+                    and use `rem` or `em` in all of our CSS styles for sizing. To scale everything on the page proportionately
+                    larger or smaller, we can just then change this base font-size rather than each and every
+                    related style, which would be very unwieldy, and error prone if we are trying to keep its relative scale!
+        NOTE: 
+        1. By default font-size is 16px unless overriden
+        2. User overrides are those set by users in their browser, and those 
+                are different from developer overrides in Developer Tools
+        
+        NOW: Rather than specifying a font-size override of 10px, we use a percentage
+                as a Best Practice to enable the page to scale up/down if & when users have 
+                custom overrides in their preferences.
+    */
+  font-size: 62.5%;
+  /* RE: Screen Sizes
+    Note: we are using Desktop first, rather than Mobile first mode. With that, we are doing the following:
+    1. Designating 1200-1800 as the default desktop range
+    2. Using max-width for screen sizes smaller than default desktop range
+    3. Using min-width for screen sizes larger than default desktop range
+
+    a. 0px    - 640px : phone-mode
+    b. 640px  - 900px : tablet-portrait-mode
+    c. 900px  - 1200px: tablet-landscape-mode
+    d. 1200px - 1800px: desktop-mode
+    e. 1800px - larger: wide-desktop-mode
+
+    Note: @content is a special directive and is set to the calling nested block
+    Warning: multiple media queries can be matched, and the last overrides so sequence mattters
+                so we must sequence the most restrictive condition last so it prevails -- overrides earlier least restrictive matcher
+    */
+  /* Use our paramaterized mixin to scale our default base font-size to relatively scale our base rem & em units */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+  @media (min-width: 112.5em) {
+    html {
+      font-size: 75%; } }
+  @media (max-width: 75em) {
+    html {
+      font-size: 56.25%; } }
+  @media (max-width: 56.25em) {
+    html {
+      font-size: 50%; } }
+  @media (max-width: 40em) {
+    html {
+      font-size: 45%; } }
+
+body {
+  box-sizing: border-box;
+  padding: 1rem;
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+  @media (max-width: 56.25em) {
+    body {
+      padding: 0; } }
+
+@keyframes moveFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem); }
+  80% {
+    opacity: .75;
+    transform: translate(2.5rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+@keyframes moveFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem); }
+  40% {
+    opacity: .20;
+    transform: rotateY(180deg); }
+  90% {
+    opacity: .45;
+    transform: translate(-2.5rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+@keyframes moveFromBottomCenter {
+  0% {
+    opacity: 0;
+    transform: translateY(10rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  /* font-size: 16px; */
+  line-height: 1.7;
+  color: #777; }
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  /* hack to avoid jittery/ghost bouncing on some browsers */
+  margin-bottom: 4rem; }
+  .heading-primary--main {
+    display: block;
+    font-size: 4rem;
+    font-weight: 400;
+    letter-spacing: 4rem;
+    animation: moveFromLeft 1s ease-in-out;
+    /* minimize spacing and font size in small phone mode */
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .heading-primary--main {
+        letter-spacing: .75rem;
+        font-family: 5rem; } }
+  .heading-primary--caption {
+    display: block;
+    font-size: 2rem;
+    font-weight: 350;
+    letter-spacing: 1.4rem;
+    animation: moveFromRight 1s ease-in-out;
+    /* minimize spacing and font size in small phone mode */
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .heading-primary--caption {
+        letter-spacing: .5rem; } }
+
+.heading-secondary {
+  font-weight: 300;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  display: inline-block;
+  background-image: linear-gradient(to right, #7ed56f, #28b485);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: .2rem;
+  transition: all .2s;
+  /* minimize spacing and font size in small phone mode */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+  @media (min-width: 112.5em) {
+    .heading-secondary {
+      font-size: 5.5rem; } }
+  @media (max-width: 40em) {
+    .heading-secondary {
+      letter-spacing: 1.2rem; } }
+  .heading-secondary:hover {
+    transform: skewY(-14deg) scale(1.1);
+    text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2); }
+
+.heading-tertiary {
+  font-size: 1.5rem;
+  font-weight: 250;
+  text-transform: uppercase; }
+
+.paragraph {
+  font-size: 1.2rem; }
+  .paragraph:not(last-child) {
+    margin: 0px auto 2rem auto; }
+
+.u-center-text {
+  text-align: center; }
+
+.u-margin-top-neg-large {
+  margin-top: -12rem; }
+
+.u-margin-top-xsmall {
+  margin-top: 1rem; }
+
+.u-margin-top-small {
+  margin-top: 2rem; }
+
+.u-margin-top-medium {
+  margin-top: 4rem; }
+
+.u-margin-bottom-xsmall {
+  margin-bottom: .2rem; }
+
+.u-margin-bottom-small {
+  margin-bottom: 2rem; }
+
+.u-margin-bottom-medium {
+  margin-bottom: 4rem; }
+
+.u-margin-bottom-large {
+  margin-bottom: 8rem; }
+
+.floating-nav {
+  /* space out the drawer'the ::before and ::after pseudo elements in to suggest the press/hover downward pressure */
+  /* these styles handle the pressed animations to turn drawer menu dashes into a cross for closing */ }
+  .floating-nav__checkbox {
+    display: none; }
+  .floating-nav__button {
+    z-index: 2002;
+    background-color: white;
+    border-radius: 50%;
+    height: 7rem;
+    width: 7rem;
+    /* set fixed position relative to its parent to pull it out of its normal flow to dock to around top-right */
+    position: fixed;
+    top: 4rem;
+    right: 4rem;
+    box-shadow: 0 1.5rem 2.5rem rgba(0, 0, 0, 0.5);
+    text-align: center;
+    cursor: pointer;
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+  .floating-nav__background {
+    z-index: 2000;
+    /* make a circle */
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    /* set fixed position relative to its parent to pull it out of its normal flow to dock to around top-right */
+    position: fixed;
+    top: 4.5rem;
+    right: 4.5rem;
+    /* set a radial emanating gradient */
+    background-image: radial-gradient(#7ed56f, #28b485);
+    transition: transform .8s; }
+  .floating-nav__menu {
+    z-index: 2001;
+    opacity: 0;
+    height: 100vh;
+    width: 0;
+    /* pull out of its default flow to position explicitly*/
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition: opacity 1.8s;
+    text-align: center; }
+  .floating-nav__list {
+    width: 100%;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center; }
+  .floating-nav__item {
+    margin: 1rem; }
+  .floating-nav__link:link, .floating-nav__link:visited {
+    display: inline-block;
+    padding: 1.5rem 2rem;
+    font-size: 5rem;
+    font-weight: 300;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    /* create solid linear gradient */
+    background-image: linear-gradient(120deg, transparent 0%, transparent 50%, #fff 50%);
+    background-size: 230%;
+    transition: all .4s; }
+    .floating-nav__link:link span, .floating-nav__link:visited span {
+      margin-right: 1rem;
+      display: inline-block; }
+  .floating-nav__link:hover, .floating-nav__link:active {
+    color: #777;
+    background-position: 100%;
+    transform: translateX(1.5rem); }
+  .floating-nav__checkbox:checked ~ .floating-nav__background {
+    transform: scale(90); }
+  .floating-nav__checkbox:checked ~ .floating-nav__menu {
+    opacity: 1;
+    width: 100%; }
+  .floating-nav__drawer {
+    position: relative;
+    margin-top: 3rem;
+    z-index: 5000; }
+    .floating-nav__drawer, .floating-nav__drawer::before, .floating-nav__drawer::after {
+      width: 3.5rem;
+      height: 2px;
+      background-color: #333;
+      display: inline-block; }
+    .floating-nav__drawer::before, .floating-nav__drawer::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s; }
+    .floating-nav__drawer::before {
+      top: -1rem; }
+    .floating-nav__drawer::after {
+      top: 1rem; }
+  .floating-nav:hover .floating-nav__drawer::before {
+    top: -1.1rem; }
+  .floating-nav:hover .floating-nav__drawer::after {
+    top: 1.1rem; }
+  .floating-nav__checkbox:checked + .floating-nav__button .floating-nav__drawer {
+    background-color: transparent; }
+  .floating-nav__checkbox:checked + .floating-nav__button .floating-nav__drawer::before {
+    top: 0;
+    transform: rotate(135deg); }
+  .floating-nav__checkbox:checked + .floating-nav__button .floating-nav__drawer::after {
+    top: 0;
+    transform: rotate(-135deg); }
+
+.header {
+  position: relative;
+  height: 40vh;
+  /* set height equal to 95% view port height */
+  background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.4), rgba(40, 180, 133, 0.55)), url(../img/hero.jpg);
+  background-size: cover;
+  text-align: center;
+  background-position: top;
+  clip-path: polygon(0 0, 100% 0, 100% 32vh, 0 100%);
+  /* triangle instead: clip-path: polygon(50% 0, 100% 100%, 0 100%) */ }
+  .header__logo-box {
+    position: absolute;
+    top: 5rem;
+    left: 2rem; }
+  .header__logo {
+    height: 4.5rem; }
+  .header__hero-caption {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; }
+
+.row {
+  max-width: 114rem;
+  margin: 2rem auto;
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* WARNING: Bug/Limitation of calc or CSS to have nested math expression inside a parenthesis to 
+                parameterize the number of between gutter spacing between columns.
+        width: calc((100% - (2-1)*8rem)/(2));    
+        width: calc((100% - calc(2-1)*8rem)/(2));    
+        width: calc((100% - (calc(2-1))*8rem)/(2));    
+    */ }
+  @media (max-width: 40em) {
+    .row {
+      max-width: 90%; } }
+  .row:not(:last-child) {
+    margin-bottom: 6rem;
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .row:not(:last-child) {
+        margin-bottom: 4rem; } }
+  .row::after {
+    content: "";
+    display: table;
+    clear: both; }
+  .row [class^="col-"] {
+    float: left;
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    .row [class^="col-"]:not(:last-child) {
+      margin-right: 8rem;
+      /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+      @media (max-width: 40em) {
+        .row [class^="col-"]:not(:last-child) {
+          margin-right: 0;
+          margin-bottom: 4rem; } }
+    @media (max-width: 40em) {
+      .row [class^="col-"] {
+        width: 100% !important; } }
+  .row .col-1-of-1 {
+    width: calc((100% - (0)*8rem)/(1)); }
+  .row .col-1-of-2 {
+    width: calc((100% - (1)*8rem)/(2)); }
+  .row .col-1-of-3 {
+    width: calc( (100% - 2*8rem)/3); }
+  .row .col-2-of-3 {
+    width: calc(2*((100% - 2*8rem)/3) + 8rem); }
+  .row .col-1-of-4 {
+    width: calc((100% - 3*8rem)/4); }
+  .row .col-2-of-4 {
+    width: calc(2*((100% - 3*8rem)/4) + 8rem); }
+  .row .col-3-of-4 {
+    width: calc(3*((100% - 3*8rem)/4) + 2*8rem); }
+
+.footer {
+  background-color: #333;
+  padding: 2rem auto;
+  font-size: 1.4rem;
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+  @media (max-width: 40em) {
+    .footer {
+      padding: 6rem 0; } }
+  .footer__logo-box {
+    text-align: center;
+    margin-bottom: 4rem; }
+  .footer__logo {
+    width: 6rem;
+    height: auto; }
+  .footer__navigation {
+    border-top: 2px solid #777;
+    padding-top: 1rem;
+    display: inline-block;
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .footer__navigation {
+        width: 100%;
+        text-align: center; } }
+  .footer__list {
+    list-style: none; }
+  .footer__item {
+    display: inline-block; }
+    .footer__item:not(:last-child) {
+      margin-right: 2rem; }
+  .footer__link:link, .footer__link:visited {
+    color: #f7f7f7;
+    background-color: #333;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: all .2s; }
+  .footer__link:hover, .footer__linkactive {
+    color: #55c57a;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    transform: scale(1.2); }
+  .footer__copyright {
+    border-top: 1px solid #777;
+    padding-top: 1rem;
+    display: inline-block;
+    float: right;
+    width: 80%;
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .footer__copyright {
+        width: 100%;
+        text-align: center; } }
+  .footer #author:hover {
+    transform: rotate(-5deg) scale(1.2); }
+  .footer #owner:hover {
+    transform: rotate(5deg) scale(1.2); }
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  /* font-size: 16px; */
+  line-height: 1.7;
+  color: #777; }
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  /* hack to avoid jittery/ghost bouncing on some browsers */
+  margin-bottom: 4rem; }
+  .heading-primary--main {
+    display: block;
+    font-size: 4rem;
+    font-weight: 400;
+    letter-spacing: 4rem;
+    animation: moveFromLeft 1s ease-in-out;
+    /* minimize spacing and font size in small phone mode */
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .heading-primary--main {
+        letter-spacing: .75rem;
+        font-family: 5rem; } }
+  .heading-primary--caption {
+    display: block;
+    font-size: 2rem;
+    font-weight: 350;
+    letter-spacing: 1.4rem;
+    animation: moveFromRight 1s ease-in-out;
+    /* minimize spacing and font size in small phone mode */
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+    @media (max-width: 40em) {
+      .heading-primary--caption {
+        letter-spacing: .5rem; } }
+
+.heading-secondary {
+  font-weight: 300;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  display: inline-block;
+  background-image: linear-gradient(to right, #7ed56f, #28b485);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: .2rem;
+  transition: all .2s;
+  /* minimize spacing and font size in small phone mode */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+  /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */ }
+  @media (min-width: 112.5em) {
+    .heading-secondary {
+      font-size: 5.5rem; } }
+  @media (max-width: 40em) {
+    .heading-secondary {
+      letter-spacing: 1.2rem; } }
+  .heading-secondary:hover {
+    transform: skewY(-14deg) scale(1.1);
+    text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2); }
+
+.heading-tertiary {
+  font-size: 1.5rem;
+  font-weight: 250;
+  text-transform: uppercase; }
+
+.paragraph {
+  font-size: 1.2rem; }
+  .paragraph:not(last-child) {
+    margin: 0px auto 2rem auto; }
+
+/* Button Behavior */
+.btn, .btn:link, .btn:visited {
+  position: relative;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  display: inline-block;
+  border-radius: 2em;
+  cursor: pointer; }
+
+.btn--white {
+  background-color: #fff;
+  color: darkorange; }
+  .btn--white::after {
+    background-color: #fff; }
+
+.btn--green {
+  background-color: #7ed56f;
+  color: white; }
+  .btn--green::after {
+    background-color: #7ed56f; }
+
+.btn:hover {
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1.5rem 2.5rem rgba(0, 0, 0, 0.5);
+  /* creates an 'unhide' and enlarges effect */ }
+  .btn:hover::after {
+    transform: scale(1.4);
+    opacity: 0; }
+
+.btn:active, .btn:focus {
+  transform: translateY(-0.1rem);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+  outline: none; }
+
+.btn::after {
+  content: "";
+  border-radius: 2em;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s; }
+
+.btn--animated {
+  animation: moveFromBottomCenter .5s ease-out .35s;
+  animation-fill-mode: backwards; }
+
+.button-text:link, .button-text:visited {
+  font-size: 1.2rem;
+  color: #55c57a;
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid #55c57a;
+  padding: .3rem;
+  transition: all .2s; }
+
+.button-text:hover {
+  background-color: #55c57a;
+  color: #fff;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px); }
+
+.button-text:active {
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+  transform: translateY(0); }
+
+.composition {
+  position: relative;
+  top: 3rem;
+  right: -1rem; }
+  .composition__photo {
+    width: 55%;
+    padding: .1rem .1rem;
+    box-shadow: 0 1.5rem 40px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+    transition: all .25sec;
+    outline-offset: .2rem; }
+    .composition__photo--p1 {
+      left: 0;
+      top: -2rem; }
+    .composition__photo--p2 {
+      right: 2rem;
+      top: 0; }
+    .composition__photo--p3 {
+      left: 20%;
+      top: 4rem; }
+    .composition__photo:hover {
+      transform: scale(1.3);
+      box-shadow: 0 2.5rem 40px rgba(0, 0, 0, 0.8);
+      z-index: 12;
+      outline: 0.1rem solid #55c57a; }
+  .composition:hover .composition__photo:not(:hover) {
+    transform: scale(0.95); }
+
+.card {
+  /* Functionality */
+  perspective: 150rem;
+  -moz-perspective: 150rem;
+  position: relative;
+  text-align: center;
+  padding: 4rem 0;
+  color: darkorange;
+  height: 28rem;
+  color: #fff; }
+  .card__side {
+    backface-visibility: hidden;
+    transition: all .7s ease-in;
+    height: 28rem;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; }
+    .card__side--front {
+      background-color: #777; }
+    .card__side--back {
+      transform: rotateY(180deg); }
+      .card__side--back-1 {
+        background-image: linear-gradient(to right bottom, #ffb900, #ff7730); }
+      .card__side--back-2 {
+        background-image: linear-gradient(to right bottom, #7ed56f, #28b485); }
+      .card__side--back-3 {
+        background-image: linear-gradient(to right bottom, #2998ff, #5643fa); }
+  .card .heading-tertiary {
+    text-transform: uppercase; }
+  .card:hover .card__side--front {
+    transform: rotateY(-180deg); }
+  .card:hover .card__side--back {
+    transform: rotateY(0); }
+  .card__picture {
+    background-size: cover;
+    height: 12rem; }
+    .card__picture-1 {
+      background-image: url(../img/nat-5.jpg);
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+      clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%); }
+    .card__picture-2 {
+      background-image: url(../img/nat-6.jpg);
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%);
+      clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%); }
+    .card__picture-3 {
+      background-image: url(../img/nat-7.jpg);
+      -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%); }
+  .card__heading {
+    position: absolute;
+    text-align: right;
+    top: 8rem;
+    font-size: 1.4rem;
+    font-weight: 220;
+    text-transform: uppercase;
+    width: 80%; }
+  .card__heading-span {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone; }
+    .card__heading-span--1 {
+      background-image: linear-gradient(to right bottom, #ffb900, #ff7730, 0.6); }
+  .card__details {
+    padding: 1rem 0 2rem 0;
+    width: 80%;
+    margin: 0 auto; }
+    .card__details ul {
+      width: 90%;
+      list-style: none; }
+      .card__details ul li {
+        text-align: center;
+        padding: 1rem; }
+        .card__details ul li:not(:last-child) {
+          border-bottom: 1px solid #eee; }
+  .card__cta {
+    position: absolute;
+    /* following 3 properties is a way to center entire component. think move this div half way over and down from its parent element, and then move it left and up by "half of its OWN width and height respectively" */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; }
+  .card__price-box {
+    margin-bottom: 2rem; }
+  .card__price-value {
+    font-size: 2rem;
+    font-weight: 100; }
+
+.story {
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 4rem rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  font-size: 1.2rem;
+  transform: skewX(-10deg);
+  /* test media query */
+  /* NOTE!!: subtle but this means when you hover over the story (not just the profile photo, and we could change this to be just the profile photot if we chose to), 
+                we then apply an effect on the element(s) in which the selector of `.story__reviewer` matches, i.e. the reviewer name tag. 
+    */
+  /* NOTE!!: subtle but this means when you hover over the story (not just the profile photo, and we could change this to be just the profile photot if we chose to), 
+                we then apply this tnansform effect on the element(s) in which the selector of `.story__image` matches, i.e. the image of the reviewer. 
+    */ }
+  .story > * {
+    transform: skewX(10deg); }
+  @media (max-width: 600px) {
+    .story {
+      width: 95%; } }
+  .story__profile-photo {
+    float: left;
+    position: relative;
+    /* note this requires shape-outside requires width and height values or else it won't work */
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+    width: 9rem;
+    height: 9rem;
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+    transform: translateX(-1rem) skewX(10deg); }
+  .story__image {
+    height: 100%;
+    transform: translateX(-2rem) scale(1.4); }
+  .story__caption {
+    transform: skewX(10deg); }
+  .story__reviewer {
+    /* next four props positions it in center of its parent element*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, 50%); this is target state on hover but we move it down by some amount, e.g 90% to hide it until then */
+    transform: translate(-50%, 90%);
+    /* but we move it way down (from center) to make it invisible until hover event */
+    opacity: .01;
+    color: #fff;
+    font-size: 1.4rem;
+    text-align: center;
+    transition: all .3s; }
+  .story:hover .story__reviewer {
+    opacity: 1;
+    transform: translate(-50%, -50%); }
+  .story:hover .story__image {
+    transform: translateX(-2rem) scale(1);
+    filter: blur(3px) brightness(80%); }
+
+.feature-box {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  animation: all .2s ease-in;
+  padding: 2rem 1rem;
+  width: 100%; }
+  .feature-box__icon {
+    font-size: 3rem;
+    background-image: linear-gradient(to right, #7ed56f, #28b485);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text; }
+  .feature-box:hover {
+    transform: translateY(-0.5rem) scale(1.02); }
+
+.booking {
+  background-image: linear-gradient(105deg, rgba(255, 255, 255, 0.9) 0%, rgba(238, 238, 238, 0.9) 50%, transparent 50%), url(../img/nat-10.jpg);
+  background-size: cover; }
+
+.booking-form {
+  position: relative;
+  width: 50%;
+  padding: 2rem 2rem 10rem 2rem;
+  /* 
+        NOTE!!: Even though this rule is triggered on the input :placeholder-shown state, it's not embedded in the &__input. This is 
+                because we are styling the __label rather than the input itself.
+        Use: adjacent sibling, i.e `+` selector. 
+        This reads as: 'whenever the input's placeholder text is shown, i.e. visible, select the direct sibling with class booking-form_label and apply these styles`
+    */
+  /* create custom round concentric radio buttons */
+  /* as soon as radio input is checked, grab adjacent or direct (either works in this case) sibling's child, and give it opacity=1 to make it looked selected */ }
+  .booking-form__group:not(:last-child) {
+    position: relative;
+    margin-bottom: 3rem; }
+  .booking-form__label {
+    font-size: 1.4rem;
+    font-weight: 500;
+    /* `display: block` required for margin-left/top  so these next three props are to move label underneath placeholder text */
+    display: block;
+    margin-left: 2rem;
+    transition: all .2s; }
+  .booking-form__input {
+    font-family: inherit;
+    font-size: 1.4rem;
+    padding: .5rem 2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-bottom: 4px solid transparent;
+    width: 90%;
+    display: block;
+    color: inherit;
+    transition: all 1.2s; }
+    .booking-form__input::-webkit-input-placeholder {
+      color: #777; }
+    .booking-form__input:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+      border-bottom: 4px solid #55c57a; }
+    .booking-form__input:focus:invalid {
+      color: #ff7730;
+      border-bottom: 4px solid #ff7730; }
+  .booking-form__input:placeholder-shown + .booking-form__label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4rem); }
+  .booking-form__radio-group {
+    position: relative;
+    display: inline-block;
+    width: 32%; }
+  .booking-form__radio-label {
+    position: relative;
+    padding-left: 2.5rem;
+    font-size: 1.2rem;
+    cursor: pointer; }
+  .booking-form__radio-input {
+    display: none; }
+  .booking-form__radio-custom-button {
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+    border: 3px solid #55c57a;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: -.3rem;
+    /* drawing inner circle. Note: it's hidden until selected */ }
+    .booking-form__radio-custom-button::after {
+      content: '';
+      display: block;
+      height: 1rem;
+      width: 1rem;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #28b485;
+      opacity: 0;
+      transition: opacity .2s; }
+  .booking-form__radio-input:checked ~ .booking-form__radio-label .booking-form__radio-custom-button::after {
+    opacity: 1; }
+
+.booking-popup {
+  position: fixed;
+  z-index: 5000;
+  /* hide by default. note this uses opacity and visibility because `display: none` will not allow us to animate it when button press/tap occurs */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  /* this enlarges it to take over entire viewport and anchors it at (x,y) = (0,0) */
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  /* end...moving on to color */
+  background-color: rgba(255, 255, 255, 0.85);
+  /* this `:target` is a special pseudo class for when this selector, i.e. .booking-popup:target is active */ }
+  .booking-popup__dialog {
+    opacity: 0;
+    display: table;
+    /* WARNING: Must combine our two transforms: 1) start with a smaller version until we are animated in later and combine wit the 2) translate transform to center in one line to avoid collision that drops any earlier/overriden transforms */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.2);
+    background-color: #333;
+    width: 65%;
+    transition: all .4s .3s; }
+  .booking-popup:target {
+    opacity: 1;
+    visibility: visible; }
+  .booking-popup:target .booking-popup__dialog {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); }
+  .booking-popup__closer:link, .booking-popup__closer:visited {
+    position: absolute;
+    top: 1rem;
+    right: 2.5rem;
+    font-size: 10rem;
+    color: #ff7730;
+    text-decoration: none;
+    /* this ensures that the :hover or other pseudo selectors only take effect when it directly touches the matched elements of this selector */
+    line-height: 1; }
+  .booking-popup__closer:hover {
+    color: #55c57a; }
+  .booking-popup__left {
+    display: table-cell;
+    width: 33.3%;
+    vertical-align: middle; }
+  .booking-popup__right {
+    padding: 1rem 3rem;
+    display: table-cell;
+    width: 67.7%;
+    vertical-align: middle; }
+  .booking-popup__image {
+    display: block;
+    width: 100%; }
+  .booking-popup__terms {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    /* adding columns */
+    -moz-column-count: 3;
+    -moz-column-gap: 2.2rem;
+    -moz-column-rule: 1px solid #999;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 2.2rem;
+    -webkit-column-rule: 1px solid #999;
+    column-count: 3;
+    column-gap: 2.2rem;
+    column-rule: 1px solid #999;
+    /* handle hyphenated words */
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto; }
+  .booking-popup .heading-tertiary {
+    color: #ff7730; }
+
+.section-about {
+  padding: 20rem 4rem 40rem;
+  margin-top: -15vh;
+  background-color: #f7f7f7;
+  background-size: cover; }
+
+.section-features {
+  padding: 24rem 8rem;
+  margin: -4rem auto;
+  background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.4), rgba(40, 180, 133, 0.4)), url(../img/nat-4.jpg);
+  background-size: cover;
+  transform: skewY(7deg); }
+  .section-features > * {
+    transform: skewY(-7deg); }
+
+.section-tours {
+  background-color: #f7f7f7;
+  padding: 14rem 8rem; }
+
+.section-stories {
+  background-color: #f7f7f7;
+  padding: 2rem 0 12rem 0; }
+
+.section-booking {
+  background-color: #f7f7f7;
+  padding: 2rem 0 12rem 0; }

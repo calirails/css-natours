@@ -1,0 +1,36 @@
+.section-about {
+    padding: 20rem 4rem 40rem;
+    margin-top: -15vh;
+    background-color: $color-lightest-gray;
+    background-size: cover; // cover entire section
+}
+
+.section-features {
+    padding: 24rem 8rem; // adds more internal space inside to space out content so it's not squeezed so tightly
+    margin: -4rem auto; // moves the top of the section up to hide the white space gap due to the diagonal skew applied with skewY
+    background-image: linear-gradient(to right bottom, 
+        rgba($color-primary-light, .4), 
+        rgba($color-primary-dark, .4)), 
+        url(../img/nat-4.jpg); // applies a gradient over image that goes top left to bottom right corner
+    background-size: cover; // cover entire section   
+    transform: skewY(7deg); // tilting or skewing instead of use of clip-path: polygon(...)
+
+    & > * {
+        transform: skewY(-7deg); // this could be moved to children but generalizes/cascades behavior to al children to avoid specific overrides that have to be repeated for other div classes of cards should they be added in future
+    }
+}
+
+.section-tours {
+    background-color: $color-lightest-gray;
+    padding: 14rem 8rem; // give it some separation
+}
+
+.section-stories {
+    background-color: $color-lightest-gray;
+    padding: 2rem 0 12rem 0;
+}
+
+.section-booking {
+    background-color: $color-lightest-gray;
+    padding: 2rem 0 12rem 0;
+}

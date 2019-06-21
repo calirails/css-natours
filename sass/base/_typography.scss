@@ -1,0 +1,83 @@
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    /* font-size: 16px; */
+    line-height: 1.7;
+    color: $color-dark-gray;
+}
+
+.heading-primary {
+    color: #fff;
+    text-transform: uppercase;
+    backface-visibility: hidden; /* hack to avoid jittery/ghost bouncing on some browsers */
+    margin-bottom: 4rem;
+
+    &--main {
+        display: block;
+        font-size: 4rem;
+        font-weight: 400;
+        letter-spacing: 4rem;
+        animation: moveFromLeft 1s ease-in-out;
+
+        /* minimize spacing and font size in small phone mode */
+        @include responsive-content(phone-mode) {
+            letter-spacing: .75rem;
+            font-family: 5rem;
+        }
+        
+    }
+    
+    &--caption {
+        display: block;
+        font-size: 2rem;
+        font-weight: 350;
+        letter-spacing: 1.4rem;
+        animation: moveFromRight 1s ease-in-out;
+
+        /* minimize spacing and font size in small phone mode */
+        @include responsive-content(phone-mode) {
+            letter-spacing: .5rem;
+        }
+    }
+}
+
+.heading-secondary {
+    font-weight: 300;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    text-align: center;
+    display: inline-block;
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: .2rem;
+    transition: all .2s;
+
+    /* minimize spacing and font size in small phone mode */
+    @include responsive-content(wide-desktop-mode) {
+        font-size: 5.5rem;
+    }
+
+    @include responsive-content(phone-mode) {
+        letter-spacing: 1.2rem;
+    }
+
+    &:hover {
+        transform: skewY(-14deg) scale(1.1);
+        text-shadow: .5rem 1rem 2rem rgba($color-black, .2)
+    }
+}
+
+.heading-tertiary {
+    font-size: 1.5rem;
+    font-weight: 250;
+    text-transform: uppercase;
+}
+
+.paragraph {
+    font-size: 1.2rem;
+    &:not(last-child) {
+        margin: 0px auto 2rem auto;
+    }
+}

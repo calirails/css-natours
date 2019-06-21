@@ -1,0 +1,142 @@
+.card {
+    /* Functionality */
+    perspective: 150rem; // needed for 3d perspective to make rotation look correct
+    -moz-perspective: 150rem; // for Mozilla FF browser
+    position: relative;
+    // border: 2px solid; // temporary, should remove once we no longer need visual cues for where it's positioned
+    text-align: center; // centers all text/font objects contained inside
+    padding: 4rem 0; // push content up and down to avoid over-crowding the title
+    color: $color-dark-orange;
+    height: 28rem; // must match the __side of card or it will be squished and not visible
+    color: $color-white;
+
+    &__side {
+        backface-visibility: hidden; // required to put card behind
+        transition: all .7s ease-in; // to show card rotation transform
+        height: 28rem; // not visible otherwise
+        width: 100%; // to take up all space of its parent card, edge to edge placement
+        position: absolute; // so we can position card specifically rather than in its derived 'flow' position
+        top: 0; // to anchor at top
+        left: 0; // to anchor at left
+        
+        &--front {
+            background-color: $color-dark-gray; // just for color
+        }
+        
+        &--back {
+            transform: rotateY(180deg); // !this card is hidden behind and starts 180deg rotated and on hover, it transforms to 0deg putting it in front to become visible
+            &-1 {
+                background-image: linear-gradient(to right bottom, 
+                    $color-secondary-light, 
+                    $color-secondary-dark)
+            } // just a gradient
+            &-2 {
+                background-image: linear-gradient(to right bottom, 
+                    $color-primary-light, 
+                    $color-primary-dark)
+            } // just a gradient
+            &-3 {
+                background-image: linear-gradient(to right bottom, 
+                    $color-tertiary-light, 
+                    $color-tertiary-dark)
+            } // just a gradient
+        }
+    }
+    
+    .heading-tertiary {
+        text-transform: uppercase; // upper case text on heading
+    }
+
+    &:hover &__side--front {
+        transform: rotateY(-180deg); // on hover, apply a 180 degree rotation around y-axis
+    }
+
+    &:hover &__side--back {
+        transform: rotateY(0); // on hover, apply a 180 degree rotation around y-axis
+    }
+
+    // Front side styling
+    &__picture {
+        background-size: cover; // to 'fit' image to its container
+        height: 12rem;
+        // background-blend-mode: screen; // hot, new; not currently supported in IE/Edge. Not used unless we have multiple chained background-image: below
+        
+        &-1 {
+            background-image: url(../img/nat-5.jpg); //, linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+        }
+        &-2 {
+            background-image: url(../img/nat-6.jpg);
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%);
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 0 80%);
+        }
+        &-3 {
+            background-image: url(../img/nat-7.jpg);
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+
+        }
+    }
+
+    &__heading {
+        position: absolute;
+        text-align: right;
+        top: 8rem;
+        // right: -.025rem;
+        font-size: 1.4rem;
+        font-weight: 220;
+        text-transform: uppercase;
+        width: 80%;
+    }
+
+    &__heading-span {
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        
+        &--1 {
+            background-image: linear-gradient(to right bottom, 
+                                    $color-secondary-light, 
+                                    $color-secondary-dark,
+                                    .6)
+        }
+    } 
+    
+    &__details {
+        padding: 1rem 0 2rem 0;
+        width: 80%;
+        margin: 0 auto;
+
+        ul {
+            width: 90%; 
+            list-style: none;
+            
+            li {
+                text-align: center;
+                padding: 1rem;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid $color-medium-gray;
+                }
+            }
+        }
+    }
+
+    &__cta {
+        position: absolute;
+        /* following 3 properties is a way to center entire component. think move this div half way over and down from its parent element, and then move it left and up by "half of its OWN width and height respectively" */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 90%;
+    }
+
+    &__price-box {
+        margin-bottom: 2rem;
+    }
+
+    &__price-value {
+        font-size: 2rem;
+        font-weight: 100;
+    }
+}

@@ -1,0 +1,71 @@
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin centeredInParent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* RE: Screen Sizes
+    Note: we are using Desktop first, rather than Mobile first mode. With that, we are doing the following:
+    1. Designating 1200-1800 as the default desktop range
+    2. Using max-width for screen sizes smaller than default desktop range
+    3. Using min-width for screen sizes larger than default desktop range
+
+    a. 0px    - 640px : phone-mode
+    b. 640px  - 900px : tablet-portrait-mode
+    c. 900px  - 1200px: tablet-landscape-mode
+    d. 1200px - 1800px: desktop-mode, i.e. default styles apply unless overriden by Media Queries
+    e. 1800px - larger: wide-desktop-mode
+
+    Note: @content is a special directive and is set to the calling nested block
+    @mixin respond-phone-mode {
+        @media (max-width: 600px) { @content }
+    }
+*/
+
+/* Note: 
+    1. Inside Media Queries, `@content` is a special directive and is set to the calling nested block
+    2. Inside of Media Queries, 1 rem and em is still the browser default of 16px -- it does not respect our custom override to 10px in base.scss, so we use that as our divisor
+*/
+
+/* 
+    Best Practice outline for Media Queries:
+    1. Base and Typograpth > General Layout + Grid > Page Layout > Components
+*/
+
+
+
+@mixin responsive-content($device-breakpoint) {
+    // Media Queries don't respect base font-size we set using `rem` and in fact use `em` instead for cross browser support; 
+    // however 1em is still equivalent to 16px.
+    @if $device-breakpoint == phone-mode {
+        // b/c we use max-width, this applies for 640px => (640px/(16px/em)) = 40em
+        @media (max-width: 40em) { @content }; // applies if user device width is <= 40em
+    }
+    @if $device-breakpoint == tablet-portrait-mode {
+        // b/c we use max-width, this applies for 900px => (900px/(16px/em)) = 56.25em
+        @media (max-width: 56.25em) { @content }; // applies if user device width is <= 56.25em
+    }
+    @if $device-breakpoint == tablet-landscape-mode {
+        // b/c we use max-width, this applies 1200px = (1200px/(16px/em)) = 75em
+        @media (max-width: 75em) { @content }; // applies if user device width is <= 75em
+    }
+    /* Note: We do NOT need a max-width test for desktop-mode, i.e. 1200-1800px because that's our designated default
+                and per this responsive-content mixin, it will fail each of the device-breakpoint if conditions
+                Instead what we need is a min-width to detect larger screens, i.e. wide-desktop-mode
+    */
+    @if $device-breakpoint == wide-desktop-mode {
+        // for 1800px = (1800px/(16px/em)) = 112.5em, i.e. same value as above but we will use media(min-width) instead of media(max-width)
+        @media (min-width: 112.5em) { @content }; // applies if user device width is >= 112.5em
+    }
+    
+}

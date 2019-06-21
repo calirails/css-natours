@@ -1,0 +1,29 @@
+.header {
+    position: relative;
+    height: 40vh; /* set height equal to 95% view port height */
+    background-image: linear-gradient(to right bottom, rgba($color-primary-light, .4), rgba($color-primary-dark, .55)), 
+         url(../img/hero.jpg);
+    background-size: cover;
+    text-align: center;
+    background-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 32vh, 0 100%);
+    /* triangle instead: clip-path: polygon(50% 0, 100% 100%, 0 100%) */
+
+    &__logo-box {
+        position: absolute;
+        top: 5rem;
+        left: 2rem;
+    }
+    
+    &__logo {
+        height: 4.5rem;
+    }
+    
+    &__hero-caption {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+}

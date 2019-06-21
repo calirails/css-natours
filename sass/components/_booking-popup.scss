@@ -1,0 +1,105 @@
+.booking-popup {
+    position: fixed; // to take it out of its derived flow within DOM
+    z-index: 5000;
+
+    /* hide by default. note this uses opacity and visibility because `display: none` will not allow us to animate it when button press/tap occurs */
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.3s;
+    
+    /* this enlarges it to take over entire viewport and anchors it at (x,y) = (0,0) */
+    height: 100vh; // make this background occupy all of the view port height
+    width: 100%; // occupy all of width
+    top: 0;
+    left: 0;
+    /* end...moving on to color */
+    background-color: rgba(white, .85);
+    
+    &__dialog {
+        opacity: 0; // start as invisible so we can animate by transform(s) above
+        display: table;
+        /* WARNING: Must combine our two transforms: 1) start with a smaller version until we are animated in later and combine wit the 2) translate transform to center in one line to avoid collision that drops any earlier/overriden transforms */
+        @include centeredInParent;  // by itself, this mixin is to DRY out 3 styles to do centering in parent
+        transform: translate(-50%,-50%) scale(0.2);
+        background-color: $color-darkest-gray;
+        // height: 65%; // placeholder for initial laying it out
+        width: 65%;
+        transition: all .4s .3s; // add .3s delay -- corresponding to the .booking-popup parent transition. This lets that layover complete before we start this animation
+    }
+
+    /* this `:target` is a special pseudo class for when this selector, i.e. .booking-popup:target is active */
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:target &__dialog {
+        opacity: 1;
+        transform: translate(-50%,-50%) scale(1);
+    }
+    
+    &__closer {
+        &:link,
+        &:visited {
+            position: absolute;
+            top: 1rem;
+            right: 2.5rem;
+            // display: inline-block;
+            font-size: 10rem;
+            color: $color-secondary-dark;
+            text-decoration: none;
+            /* this ensures that the :hover or other pseudo selectors only take effect when it directly touches the matched elements of this selector */
+            line-height: 1; 
+        }
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
+    &__left {
+        // float: left; // removed in favor of display: table-cell below as that is simpler to align heights
+        display: table-cell;
+        width: 33.3%;
+        vertical-align: middle;
+    }
+    
+    &__right {
+        // float: left; // removed in favor of display: table-cell below as that is simpler to align heights
+        padding: 1rem 3rem;
+        display: table-cell;
+        width: 67.7%;
+        vertical-align: middle;
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+    }
+
+    &__terms {
+        font-size: 1.4rem;
+        
+        margin-bottom: 2rem;
+
+        /* adding columns */
+        -moz-column-count: 3;
+        -moz-column-gap: 2.2rem; // aside: default value of column-gap is 1em, in this case 1.4px since font-size is 1.4rem;
+        -moz-column-rule: 1px solid $color-dark-gray-2;
+        -webkit-column-count: 3;
+        -webkit-column-gap: 2.2rem; // aside: default value of column-gap is 1em, in this case 1.4px since font-size is 1.4rem;
+        -webkit-column-rule: 1px solid $color-dark-gray-2;
+        column-count: 3;
+        column-gap: 2.2rem; // aside: default value of column-gap is 1em, in this case 1.4px since font-size is 1.4rem;
+        column-rule: 1px solid $color-dark-gray-2;
+
+        /* handle hyphenated words */
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .heading-tertiary {
+        color: $color-secondary-dark;
+    }
+}

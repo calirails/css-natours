@@ -1,0 +1,160 @@
+.floating-nav {
+    &__checkbox {
+        display: none; // used only for state; so we hide it
+    }
+
+    &__button {
+        z-index: 2002; // keep on top to stay visible
+        // create white circle to cover up the smaller green circle for the expanding background //
+        background-color: white;
+        border-radius: 50%;
+        height: 7rem;
+        width: 7rem;
+        /* set fixed position relative to its parent to pull it out of its normal flow to dock to around top-right */
+        position: fixed;
+        top: 4rem; // move down .5rem less than white circle is larger than background circle by 1rem
+        right: 4rem; // move over .5rem less than white circle is larger than background circle by 1rem
+        box-shadow: 0 1.5rem 2.5rem rgba($color-black, .5);
+        text-align: center; // centers the drawer/hamburger menu
+        cursor: pointer;
+
+        @include responsive-content(ph)
+    }
+
+    &__background {
+        z-index: 2000; // keep on top to stay visible
+        /* make a circle */
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        /* set fixed position relative to its parent to pull it out of its normal flow to dock to around top-right */
+        position: fixed;  
+        top: 4.5rem;
+        right: 4.5rem;
+        /* set a radial emanating gradient */
+        background-image: radial-gradient($color-primary-light, $color-primary-dark);
+        // transform: scale(90); // make huge
+        transition: transform .8s;
+    }
+
+    &__menu {
+        z-index: 2001; // to display top of background but beneath floating nav button so it remains accessible to press
+        opacity: 0; // hide by making it 100% transparent
+        height: 100vh; // make the navigation occupy all of the view port height
+        // width: 100%; // necessary despite being a block element that by default should occupy all of the available width
+        width: 0; // hide by squeezing it all the way down
+        /* pull out of its default flow to position explicitly*/
+        position: fixed; // this ensures the menu stays locked in position to occupy all of the display even as users scroll
+        top: 0;
+        right: 0;
+        transition: opacity 1.8s;
+        text-align: center;
+    }
+    
+    &__list {
+        width: 100%;
+        // center this unordered list relative to its parent, this repeated often so we should create a mixin to DRY out this series of CSS
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        list-style: none;
+        text-align: center;
+    }
+
+    &__item {
+        margin: 1rem;
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+            display: inline-block; // to ensure padding is applied
+            padding: 1.5rem 2rem;
+            font-size: 5rem;
+            font-weight: 300;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            /* create solid linear gradient */
+            background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+            background-size: 230%;
+            transition: all .4s;
+
+            span {
+                margin-right: 1rem;
+                display: inline-block;
+            }
+        }
+        
+        &:hover,
+        &:active {
+            color: $color-dark-gray;
+            background-position: 100%;
+            transform: translateX(1.5rem); // move to the right 
+        }
+    }
+
+    &__checkbox:checked ~ &__background {
+        transform: scale(90); // make huge
+    }
+
+    // Checkbox functionality
+    &__checkbox:checked ~ &__menu {
+        opacity: 1;
+        width: 100%;
+    }
+
+    // Checkbox Functionality
+    &__drawer {
+        position: relative; // to activate child's absolute positioning
+        margin-top: 3rem; // WARNING: super touch positioning, any value >3rem and it disappears
+        z-index: 5000;
+        &,
+        &::before,
+        &::after {
+            width: 3.5rem;
+            height: 2px; // we use px since we want it to remain constant and not scale down/up as base unit changes
+            background-color: $color-darkest-gray;
+            display: inline-block; // to stack them like block elements rather than being inline as default as span elements
+        }
+
+        &::before,
+        &::after {
+            content: ""; // requred for ::before and ::after pseudo elements to be visible
+            position: absolute; // to pull out of normal flow in favor of specific positioning
+            left: 0;  // align left-most
+            transition: all .2s;
+        }
+
+        &::before {
+            top: -1rem; // WARNING: super touch positioning, any value <-1rem and it disappears
+        }
+        &::after {
+            top: 1rem; // WARNING: super touch positioning, any value >1rem and it disappears
+        }
+    }
+
+    /* space out the drawer'the ::before and ::after pseudo elements in to suggest the press/hover downward pressure */
+    &:hover &__drawer::before {
+        top: -1.1rem;
+    }
+    &:hover &__drawer::after {
+        top: 1.1rem;
+    }
+
+    /* these styles handle the pressed animations to turn drawer menu dashes into a cross for closing */
+    // remove centered line and just only show the pseudo ::before and ::after elements to simulte a cross
+    &__checkbox:checked + &__button &__drawer {
+        background-color: transparent;
+    }
+    // rotate the ::before and ::after pseudo elements
+    &__checkbox:checked + &__button &__drawer::before {
+        top: 0;
+        transform: rotate(135deg); // value should be any multiplier of 45deg
+    }
+    &__checkbox:checked + &__button &__drawer::after {
+        top: 0;
+        transform: rotate(-135deg); // value should be any multiplier of 45deg
+    }
+}

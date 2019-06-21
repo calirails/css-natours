@@ -1,0 +1,22 @@
+.feature-box {
+    text-align: center; // make all text contained centered
+    background-color: rgba($color-white, .95); // make background white 40% transparent
+    animation: all .2s ease-in;
+    // transform: skewY(-7deg); // use direct child `> *` selector to only get direct children
+    padding: 2rem 1rem;
+    width: 100%;
+
+    &__icon {
+        font-size: 3rem;
+        // Following 4 attributes creates a linear gradient that is projected onto the text
+        background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+        color: transparent;
+        -webkit-background-clip: text; // These clips or projects gradient to the actual icon, i.e. font is considered text in CSS
+        background-clip: text;
+    }
+    &:hover {
+        transform: translateY(-.5rem) scale(1.02);
+    }
+
+    
+}

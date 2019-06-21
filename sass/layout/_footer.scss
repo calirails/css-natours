@@ -1,0 +1,85 @@
+.footer {
+    background-color: $color-darkest-gray;
+    padding: 2rem auto;
+    font-size: 1.4rem;
+
+    @include responsive-content(phone-mode) {
+        padding: 6rem 0;
+    }
+
+    &__logo-box {
+        text-align: center; // image can be treated as text and centered with this simple style
+        margin-bottom: 4rem;
+    }
+
+    &__logo {
+        width: 6rem;
+        height: auto;
+    }
+
+    &__navigation {
+        border-top: 2px solid $color-dark-gray;
+        padding-top: 1rem;
+        // padding: 4rem auto; // push content inward/down
+        display: inline-block; // cuts off the line to just the content required, not the entire available space like as block elements do.
+
+        @include responsive-content(phone-mode) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    &__list {
+        list-style: none;
+    }
+
+    &__item {
+        display: inline-block;
+        &:not(:last-child) {
+            margin-right: 2rem;
+        }
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+            color: $color-lightest-gray; 
+            background-color: $color-darkest-gray;
+            text-decoration: none; // remove purple highlighting
+            text-transform: uppercase;
+            display: inline-block;
+            transition: all .2s;
+        }
+
+        &:hover,
+        &active {
+            color: $color-primary;
+            box-shadow: 0 1rem 2rem rgba($color-black, .4);
+            transform: scale(1.2);
+        }
+    }
+
+    &__copyright {
+        border-top: 1px solid $color-dark-gray;
+        padding-top: 1rem; // push content inward/down
+        display: inline-block; // cuts off the line to just the content required, not the entire available space like as block elements do.
+        float: right;
+        width: 80%;
+
+        @include responsive-content(phone-mode) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    #author {
+        &:hover {
+            transform: rotate(-5deg) scale(1.2);
+        }
+    }
+    #owner {
+        &:hover {
+            transform: rotate(5deg) scale(1.2);
+        }
+    }
+}
